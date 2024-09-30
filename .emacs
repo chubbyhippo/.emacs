@@ -19,3 +19,10 @@
     (interactive)
     (evil-scroll-down nil)
     (recenter)))
+
+(evil-define-key 'normal 'global (kbd "C-u")
+  (lambda ()
+    (interactive)
+    (evil-scroll-up nil)
+    (recenter)))
+
