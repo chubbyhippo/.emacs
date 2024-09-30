@@ -14,4 +14,8 @@
 (global-display-line-numbers-mode 1)
 (setq display-line-numbers-type 'relative)
 
-(define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
+(evil-define-key 'normal 'global (kbd "C-d")
+  (lambda ()
+    (interactive)
+    (evil-scroll-down nil)
+    (recenter)))
