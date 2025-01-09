@@ -1,28 +1,37 @@
-(require 'package)
-(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
+;;; Startup
+;;; PACKAGE LIST
+(setq package-archives 
+      '(("melpa" . "https://melpa.org/packages/")
+        ("elpa" . "https://elpa.gnu.org/packages/")))
+
+;;; BOOTSTRAP USE-PACKAGE
 (package-initialize)
-(package-refresh-contents t)
+(setq use-package-always-ensure t)
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(eval-when-compile (require 'use-package))
 
-(unless (package-installed-p 'evil)
-  (package-install 'evil))
+;;; UNDO
+;; Vim style undo not needed for emacs 28
+(use-package undo-fu)
 
-(require 'evil)
-(evil-mode 1)
+;;; Vim Bindings
+(use-package evil
+  :demand t
+  :bind (("<escape>" . keyboard-escape-quit))
+  :init
+  ;; allows for using cgn
+  ;; (setq evil-search-module 'evil-search)
+  (setq evil-want-keybinding nil)
+  ;; no vim insert bindings
+  (setq evil-undo-system 'undo-fu)
+  :config
+  (evil-mode 1))
 
-(global-display-line-numbers-mode 1)
-(setq display-line-numbers-type 'relative)
-
-(evil-define-key 'normal 'global (kbd "C-d")
-  (lambda ()
-    (interactive)
-    (evil-scroll-down nil)
-    (recenter)))
-
-(evil-define-key 'normal 'global (kbd "C-u")
-  (lambda ()
-    (interactive)
-    (evil-scroll-up nil)
-    (recenter)))
-
+;;; Vim Bindings Everywhere else
+(use-package evil-collection
+  :after evil
+  :config
+  (setq evil-want-integration t)
+  (evil-collection-init))
