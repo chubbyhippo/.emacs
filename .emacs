@@ -13,7 +13,7 @@
 (eval-when-compile (require 'use-package))
 
 ;;; Undo
-(use-package undo-redo)
+(use-package undo-fu)
 
 ;;; Vim Bindings
 (use-package evil
@@ -24,7 +24,7 @@
   ;; (setq evil-search-module 'evil-search)
   (setq evil-want-keybinding nil)
   ;; no vim insert bindings
-  (setq evil-undo-system 'undo-redo)
+  (setq evil-undo-system 'undo-fu)
   :config
   (evil-mode 1))
 
