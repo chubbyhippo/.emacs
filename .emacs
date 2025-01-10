@@ -12,9 +12,8 @@
   (package-install 'use-package))
 (eval-when-compile (require 'use-package))
 
-;;; UNDO
-;; Vim style undo not needed for emacs 28
-(use-package undo-fu)
+;;; Undo
+(use-package undo-redo)
 
 ;;; Vim Bindings
 (use-package evil
@@ -25,7 +24,7 @@
   ;; (setq evil-search-module 'evil-search)
   (setq evil-want-keybinding nil)
   ;; no vim insert bindings
-  (setq evil-undo-system 'undo-fu)
+  (setq evil-undo-system 'undo-redo)
   :config
   (evil-mode 1))
 
