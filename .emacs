@@ -1,11 +1,6 @@
 (setq ring-bell-function 'ignore)
 
-;; Set font family, size, and line height
-(set-face-attribute 'default nil
-                    :font "JetBrainsMono Nerd Font"
-                    :height 130) ;; Font size 13pt (height is in 10ths of a point)
-;; Set line spacing (similar to line height)
-(setq-default line-spacing 0.2) ;; Adjust for 1.2 line height
+(set-frame-font "JetBrainsMono Nerd Font 13" nil t)
 
 (setq package-archives
       '(("melpa" . "https://melpa.org/packages/")
