@@ -34,3 +34,8 @@
   (setq-default evil-escape-key-sequence "jj")
   (setq-default evil-escape-delay 0.2)
   (evil-escape-mode 1))
+
+(use-package dracula-theme
+  :ensure t
+  :config
+  (load-theme 'dracula t))
