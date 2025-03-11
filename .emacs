@@ -6,82 +6,74 @@
         ("gnu" . "https://elpa.gnu.org/packages/")
         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
-;; Ensure package sources are initialized
 (package-initialize)
 (unless package-archive-contents
   (package-refresh-contents))
 
-;; Helper function for installing packages if not available
-(defun ensure-package-installed (&rest packages)
-  "Ensure PACKAGES are installed. Install missing ones from package archives."
-  (mapc (lambda (package)
-          (unless (package-installed-p package)
-            (package-install package)))
-        packages))
+;; Install `use-package` if not available
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
 
-;; Install and configure `evil` (Vim-like editing)
-(ensure-package-installed 'evil)
-(require 'evil)
-(evil-mode 1)
+(require 'use-package)
+(setq use-package-always-ensure t) ;; Automatically install missing packages
 
-;; Configure "jj" as an alternative to `ESC`
-(defun my-evil-insert-mode-jj-escape ()
-  "Map 'jj' to escape insert mode in Evil."
-  (interactive)
-  (let ((key-sequence (this-command-keys)))
-    (if (string= key-sequence "jj")
-        (evil-normal-state)
-      (self-insert-command 1))))
-(define-key evil-insert-state-map "j" #'my-evil-insert-mode-jj-escape)
+;; Enable `evil` (Vim-like editing)
+(use-package evil
+  :config
+  (evil-mode 1)
 
-;; Install and configure `cider` (Clojure development)
-(ensure-package-installed 'cider)
+  ;; Configure "jj" as an alternative for ESC
+  (defun my-evil-insert-mode-jj-escape ()
+    "Map 'jj' to exit insert mode in Evil."
+    (interactive)
+    (let ((key-sequence (this-command-keys)))
+      (if (string= key-sequence "jj")
+          (evil-normal-state)
+        (self-insert-command 1))))
+  (define-key evil-insert-state-map "j" #'my-evil-insert-mode-jj-escape))
 
-;; Optional: Additional features for editing experience in Clojure
-(ensure-package-installed 'clojure-mode 'paredit 'rainbow-delimiters)
+;; Enable `cider` for Clojure development
+(use-package cider
+  :commands (cider-jack-in cider-connect)
+  :config
+  (setq cider-repl-pop-to-buffer-on-connect 'display-only
+        cider-show-error-buffer 'only-in-repl
+        cider-auto-select-error-buffer nil
+        cider-repl-wrap-history t
+        cider-repl-display-help-banner nil))
 
-;; Enable Paredit for Lisp-style structured editing
-(add-hook 'clojure-mode-hook 'paredit-mode)
+;; Configure additional Clojure development features
+(use-package clojure-mode)
+(use-package paredit
+  :hook (clojure-mode . paredit-mode)) ;; Enable Paredit for Clojure
+(use-package rainbow-delimiters
+  :hook (clojure-mode . rainbow-delimiters-mode)) ;; Highlight nested parentheses
 
-;; Enable Rainbow Delimiters for better visual of parentheses
-(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
-
-;; Optional Evil integration with Paredit (useful for seamless Vim/Paredit functionality)
+;; Optional: Enhanced Evil integration with Paredit
 (defun my/setup-evil-paredit ()
-  "Set up Evil for working with Paredit."
+  "Add Evil bindings for Paredit operations."
   (define-key evil-normal-state-map (kbd "M-(") 'paredit-wrap-round)
   (define-key evil-normal-state-map (kbd "M-[") 'paredit-wrap-square)
   (define-key evil-normal-state-map (kbd "M-{") 'paredit-wrap-curly))
 (add-hook 'paredit-mode-hook 'my/setup-evil-paredit)
 
-;; Cider configuration
-(setq cider-repl-pop-to-buffer-on-connect 'display-only) ;; Non-intrusive REPL connect
-(setq cider-show-error-buffer 'only-in-repl) ;; Show error buffers only in REPL
-(setq cider-auto-select-error-buffer nil) ;; Don't auto-select error buffers
-(setq cider-repl-wrap-history t) ;; Wrap REPL history
-(setq cider-repl-display-help-banner nil) ;; Disable help banner on REPL start
-
-;; Keybindings for Cider
-(with-eval-after-load 'cider
-  (define-key cider-mode-map (kbd "C-c C-j") 'cider-jack-in)
-  (define-key cider-mode-map (kbd "C-c C-k") 'cider-load-buffer))
-
-;; General Emacs UI/UX improvements
+;; Visual improvements
 (menu-bar-mode -1)  ;; Disable menu bar
 (tool-bar-mode -1)  ;; Disable tool bar
 (scroll-bar-mode -1) ;; Disable scroll bar
 (column-number-mode 1) ;; Show column numbers
 (global-display-line-numbers-mode 1) ;; Show line numbers globally
 
-;; Theme (Optional)
-(ensure-package-installed 'dracula-theme)
-(load-theme 'dracula t)
+;; Load a theme (e.g., Dracula)
+(use-package dracula-theme
+  :config
+  (load-theme 'dracula t))
 
-;; Save session on exit
+;; Keep packages up to date using auto-package-update
+(use-package auto-package-update
+  :config
+  (setq auto-package-update-delete-old-versions t)
+  (auto-package-update-maybe))
+
+;; Save desktop sessions
 (desktop-save-mode 1)
-
-;; Enable automatic package cleanup for dependencies
-(ensure-package-installed 'auto-package-update)
-(require 'auto-package-update)
-(setq auto-package-update-delete-old-versions t)
-(auto-package-update-maybe)
