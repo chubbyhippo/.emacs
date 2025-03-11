@@ -1,79 +1,34 @@
-;; Initialize package sources
-(require 'package)
-
-(setq package-archives
+(setq package-archives 
       '(("melpa" . "https://melpa.org/packages/")
-        ("gnu" . "https://elpa.gnu.org/packages/")
-        ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+        ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
-
-;; Install `use-package` if not available
+(setq use-package-always-ensure t)
 (unless (package-installed-p 'use-package)
+  (package-refresh-contents)
   (package-install 'use-package))
+(eval-when-compile (require 'use-package))
 
-(require 'use-package)
-(setq use-package-always-ensure t) ;; Automatically install missing packages
+(use-package undo-fu)
 
-;; Enable `evil` (Vim-like editing)
 (use-package evil
+  :demand t
+  :bind (("<escape>" . keyboard-escape-quit))
+  :init
+  (setq evil-undo-system 'undo-fu)
+  (setq evil-want-keybinding nil)
   :config
-  (evil-mode 1)
+  (evil-mode 1))
 
-  ;; Configure "jj" as an alternative for ESC
-  (defun my-evil-insert-mode-jj-escape ()
-    "Map 'jj' to exit insert mode in Evil."
-    (interactive)
-    (let ((key-sequence (this-command-keys)))
-      (if (string= key-sequence "jj")
-          (evil-normal-state)
-        (self-insert-command 1))))
-  (define-key evil-insert-state-map "j" #'my-evil-insert-mode-jj-escape))
-
-;; Enable `cider` for Clojure development
-(use-package cider
-  :commands (cider-jack-in cider-connect)
+(use-package evil-collection
+  :after evil
   :config
-  (setq cider-repl-pop-to-buffer-on-connect 'display-only
-        cider-show-error-buffer 'only-in-repl
-        cider-auto-select-error-buffer nil
-        cider-repl-wrap-history t
-        cider-repl-display-help-banner nil))
+  (setq evil-want-integration t)
+  (evil-collection-init))
 
-;; Configure additional Clojure development features
-(use-package clojure-mode)
-(use-package paredit
-  :hook (clojure-mode . paredit-mode)) ;; Enable Paredit for Clojure
-(use-package rainbow-delimiters
-  :hook (clojure-mode . rainbow-delimiters-mode)) ;; Highlight nested parentheses
-
-;; Optional: Enhanced Evil integration with Paredit
-(defun my/setup-evil-paredit ()
-  "Add Evil bindings for Paredit operations."
-  (define-key evil-normal-state-map (kbd "M-(") 'paredit-wrap-round)
-  (define-key evil-normal-state-map (kbd "M-[") 'paredit-wrap-square)
-  (define-key evil-normal-state-map (kbd "M-{") 'paredit-wrap-curly))
-(add-hook 'paredit-mode-hook 'my/setup-evil-paredit)
-
-;; Visual improvements
-(menu-bar-mode -1)  ;; Disable menu bar
-(tool-bar-mode -1)  ;; Disable tool bar
-(scroll-bar-mode -1) ;; Disable scroll bar
-(column-number-mode 1) ;; Show column numbers
-(global-display-line-numbers-mode 1) ;; Show line numbers globally
-
-;; Load a theme (e.g., Dracula)
-(use-package dracula-theme
+(use-package evil-escape
+  :ensure t
   :config
-  (load-theme 'dracula t))
-
-;; Keep packages up to date using auto-package-update
-(use-package auto-package-update
-  :config
-  (setq auto-package-update-delete-old-versions t)
-  (auto-package-update-maybe))
-
-;; Save desktop sessions
-(desktop-save-mode 1)
+  (setq-default evil-escape-key-sequence "jj")
+  (setq-default evil-escape-delay 0.2)
+  (evil-escape-mode 1))
