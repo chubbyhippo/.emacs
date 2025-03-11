@@ -1,4 +1,5 @@
 (setq ring-bell-function 'ignore)
+(tool-bar-mode -1)
 
 (setq package-archives
       '(("melpa" . "https://melpa.org/packages/")
