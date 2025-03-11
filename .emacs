@@ -1,11 +1,8 @@
 (setq ring-bell-function 'ignore)
 
-(set-frame-font "JetBrainsMono Nerd Font 13" nil t)
-
 (setq package-archives
       '(("melpa" . "https://melpa.org/packages/")
         ("elpa" . "https://elpa.gnu.org/packages/")))
-
 (package-initialize)
 (setq use-package-always-ensure t)
 (unless (package-installed-p 'use-package)
