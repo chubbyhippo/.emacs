@@ -54,6 +54,19 @@
   :config
   (load-theme 'dracula t))
 
+;; Map leader key to space bar
+(use-package evil-leader
+  :ensure t
+  :config
+  (global-evil-leader-mode)
+  ;; Set leader to space
+  (evil-leader/set-leader "<SPC>")
+  ;; Map <leader>b to :buffers<cr>
+  (evil-leader/set-key
+    "b" (lambda ()
+          (interactive)
+          (call-interactively #'buffer-menu))))
+
 ;; Custom C-u and C-d behavior in evil mode
 (defun my-c-u-and-zz ()
   "Perform C-u action (scroll up) and then call zz."
