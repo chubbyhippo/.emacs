@@ -61,16 +61,50 @@
   (global-evil-leader-mode)
   ;; Set leader to space
   (evil-leader/set-leader "<SPC>")
-  ;; Map <leader>b to :buffers<cr>
+  ;; Leader mappings
   (evil-leader/set-key
-    "b" (lambda ()
+    "b" (lambda () ;; Open buffer menu
           (interactive)
-          (call-interactively #'buffer-menu)))
-  ;; Map <leader>ap to open dired
-  (evil-leader/set-key
-    "ap" (lambda ()
+          (call-interactively #'buffer-menu))
+    "ap" (lambda () ;; Open dired (like Lexplore in Vim)
            (interactive)
-           (dired "."))))
+           (dired "."))
+    "aq" (lambda () ;; Open compilation window (like :copen in Vim)
+           (interactive)
+           (call-interactively #'compilation-start))
+    "at" (lambda () ;; Open terminal
+           (interactive)
+           (ansi-term "/bin/bash")) ;; Replace with your shell if needed
+    "dh" (lambda () ;; Clear search highlights
+           (interactive)
+           (evil-ex-nohighlight))
+    "eV" (lambda () ;; Open Emacs configuration
+           (interactive)
+           (find-file user-init-file))
+    "h" (lambda () ;; Close all other windows (like :only in Vim)
+           (interactive)
+           (delete-other-windows))
+    "m" (lambda () ;; Show marks (like :marks in Vim)
+           (interactive)
+           (evil-show-marks))
+    "sf" (lambda () ;; Find a file (like :find in Vim)
+           (interactive)
+           (call-interactively #'find-file))
+    "st" (lambda () ;; Open grep results (like :grep and :copen in Vim combined)
+           (interactive)
+           (call-interactively #'grep))
+    "sV" (lambda () ;; Reload Emacs config
+           (interactive)
+           (load-file user-init-file))
+    "w" (lambda () ;; Save current buffer (like :w in Vim)
+           (interactive)
+           (save-buffer))
+    "q" (lambda () ;; Quit current window (like :q in Vim)
+           (interactive)
+           (kill-buffer-and-window))
+    "Q" (lambda () ;; Force quit (like :q! in Vim)
+           (interactive)
+           (evil-quit-all-with-error-code))))
 
 ;; Custom C-u and C-d behavior in evil mode
 (defun my-c-u-and-zz ()
