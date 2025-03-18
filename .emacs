@@ -18,6 +18,7 @@
   :demand t
   :bind (("<escape>" . keyboard-escape-quit))
   :init
+  (setq evil-want-C-u-scroll t)
   (setq evil-undo-system 'undo-fu)
   (setq evil-want-keybinding nil)
   :config
