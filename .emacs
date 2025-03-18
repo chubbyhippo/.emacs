@@ -65,7 +65,12 @@
   (evil-leader/set-key
     "b" (lambda ()
           (interactive)
-          (call-interactively #'buffer-menu))))
+          (call-interactively #'buffer-menu)))
+  ;; Map <leader>ap to open dired
+  (evil-leader/set-key
+    "ap" (lambda ()
+           (interactive)
+           (dired "."))))
 
 ;; Custom C-u and C-d behavior in evil mode
 (defun my-c-u-and-zz ()
