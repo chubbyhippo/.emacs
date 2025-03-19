@@ -128,6 +128,22 @@
   (define-key evil-normal-state-map (kbd "C-d") 'my-c-d-and-zz)
   (define-key evil-motion-state-map (kbd "C-d") 'my-c-d-and-zz))
 
+;; Rebind `n` and `N` to center after jumping to search matches
+(with-eval-after-load 'evil
+  ;; Rebind `n` to jump to the next search match and center the screen
+  (define-key evil-normal-state-map (kbd "n")
+    (lambda ()
+      (interactive)
+      (evil-search-next)
+      (evil-scroll-line-to-center (line-number-at-pos))))
+
+  ;; Rebind `N` to jump to the previous search match and center the screen
+  (define-key evil-normal-state-map (kbd "N")
+    (lambda ()
+      (interactive)
+      (evil-search-previous)
+      (evil-scroll-line-to-center (line-number-at-pos)))))
+
 ;; Enable relative line numbers globally
 (setq display-line-numbers-type 'relative) ;; Set line numbers to relative
 (global-display-line-numbers-mode 1)       ;; Enable line numbers globally
