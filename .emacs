@@ -127,3 +127,14 @@
   ;; Replace C-d behavior
   (define-key evil-normal-state-map (kbd "C-d") 'my-c-d-and-zz)
   (define-key evil-motion-state-map (kbd "C-d") 'my-c-d-and-zz))
+
+;; Enable relative line numbers globally
+(setq display-line-numbers-type 'relative) ;; Set line numbers to relative
+(global-display-line-numbers-mode 1)       ;; Enable line numbers globally
+
+;; Disable line numbers for specific modes
+(dolist (mode '(term-mode-hook
+                shell-mode-hook
+                eshell-mode-hook
+                dired-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
