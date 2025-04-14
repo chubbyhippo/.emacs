@@ -40,14 +40,6 @@
   (setq evil-want-integration t)
   (evil-collection-init))
 
-;; Evil escape to quickly exit modes
-;;(use-package evil-escape
-;;  :ensure t
-;;  :config
-;;  (setq-default evil-escape-key-sequence "jj")
-;;  (setq-default evil-escape-delay 0.2)
-;;  (evil-escape-mode 1))
-
 ;; Dracula theme
 (use-package dracula-theme
   :ensure t
