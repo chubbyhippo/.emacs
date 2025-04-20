@@ -30,8 +30,6 @@
   (setq evil-want-C-u-scroll t) ;; Enable C-u scroll in evil mode
   (setq evil-undo-system 'undo-fu)
   (setq evil-want-keybinding nil)
-  (setq-default evil-escape-key-sequence "jj")
-  (setq-default evil-escape-delay 0.2)
   :config
   (evil-mode 1))
 
@@ -148,3 +146,6 @@
                 eshell-mode-hook
                 dired-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+(setq-default evil-escape-key-sequence "jj")
+(setq-default evil-escape-delay 0.2)
