@@ -36,9 +36,10 @@
 ;; Evil escape to quickly exit modes
 (use-package evil-escape
   :ensure t
+  :init
+  (setq evil-escape-key-sequence "jj")
+  (setq evil-escape-delay 0.2)
   :config
-  (setq-default evil-escape-key-sequence "jj")
-  (setq-default evil-escape-delay 0.2)
   (evil-escape-mode 1))
 
 ;; Evil collection
