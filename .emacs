@@ -157,6 +157,3 @@
                 eshell-mode-hook
                 dired-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-(setq-default evil-escape-key-sequence "jj")
-(setq-default evil-escape-delay 0.2)
