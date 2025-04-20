@@ -37,8 +37,10 @@
 (use-package evil-escape
   :ensure t
   :init
-  (setq evil-escape-key-sequence "jj")
-  (setq evil-escape-delay 0.2)
+  (setq evil-escape-excluded-states '(normal visual multiedit emacs motion)
+        evil-escape-excluded-major-modes '(neotree-mode treemacs-mode vterm-mode)
+        evil-escape-key-sequence "jj"
+        evil-escape-delay 0.2)
   :config
   (evil-escape-mode 1))
 
