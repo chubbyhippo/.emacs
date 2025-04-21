@@ -108,12 +108,14 @@
     "Q" (lambda () ;; Force quit (like :q! in Vim)
            (interactive)
            (evil-quit-all-with-error-code)))
-    (evil-leader/set-key-for-mode 'emacs-lisp-mode
-      "r r" (lambda ()
-              (interactive)
-              (if (eq major-mode 'emacs-lisp-mode)
-                  (eval-last-sexp)
-                (message "Not in Emacs Lisp mode")))))
+
+  ;; Add mode-specific leader bindings for Emacs Lisp files
+  (evil-leader/set-key-for-mode 'emacs-lisp-mode
+    "rr" (lambda () ;; Bind `<leader> r r` to `eval-last-sexp`
+            (interactive)
+            (if (eq major-mode 'emacs-lisp-mode)
+                (eval-last-sexp)
+              (message "Not in Emacs Lisp mode")))))
 
 ;; Custom C-u and C-d behavior in evil mode
 (defun my-c-u-and-zz ()
