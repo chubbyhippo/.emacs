@@ -107,7 +107,13 @@
            (kill-buffer-and-window))
     "Q" (lambda () ;; Force quit (like :q! in Vim)
            (interactive)
-           (evil-quit-all-with-error-code))))
+           (evil-quit-all-with-error-code)))
+    (evil-leader/set-key-for-mode 'emacs-lisp-mode
+      "r r" (lambda ()
+              (interactive)
+              (if (eq major-mode 'emacs-lisp-mode)
+                  (eval-last-sexp)
+                (message "Not in Emacs Lisp mode")))))
 
 ;; Custom C-u and C-d behavior in evil mode
 (defun my-c-u-and-zz ()
