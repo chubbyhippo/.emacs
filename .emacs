@@ -12,6 +12,12 @@
 ;; Initialize the package system
 (package-initialize)
 
+;; Set theme
+(use-package green-is-the-new-black-theme
+  :ensure t
+  :config
+  (load-theme 'green-is-the-new-black t)) ;; Load theme
+
 ;; Ensure `use-package` is installed for easier package management
 (setq use-package-always-ensure t)
 (unless (package-installed-p 'use-package)
@@ -55,12 +61,6 @@
   ;; Enable integration with various modes
   (setq evil-want-integration t)
   (evil-collection-init))
-
-;; Dracula theme (dark color scheme for better readability)
-(use-package dracula-theme
-  :ensure t
-  :config
-  (load-theme 'dracula t)) ;; Load Dracula theme
 
 ;; Evil-Leader configuration (space bar as the leader key)
 (use-package evil-leader
@@ -142,3 +142,15 @@
                 eshell-mode-hook
                 dired-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
