@@ -86,7 +86,7 @@
     "m" #'evil-show-marks           ;; Show Evil marks
     "sf" #'find-file                ;; Find a file
     "st" #'grep                     ;; Run Grep and show results
-    "sV" #'(lambda ()               ;; Reload Emacs config
+    "sV" #'(lambda ()               ;; Reload Emacs configuration
              (interactive)
              (load-file user-init-file))
     "w" #'save-buffer               ;; Save current buffer
@@ -95,7 +95,8 @@
 
   ;; Define mode-specific leader bindings for Emacs Lisp files
   (evil-leader/set-key-for-mode 'emacs-lisp-mode
-    "rr" #'eval-last-sexp)) ;; Run last s-expression (`C-x C-e` equivalent)
+    "rr" #'eval-last-sexp      ;; Evaluate the last s-expression (`C-x C-e`)
+    "fo" #'indent-region))     ;; Indent the selected region in `emacs-lisp-mode`
 
 ;; Custom scrolling behavior for `C-u` and `C-d`, with centering
 (defun my-c-u-and-zz ()
@@ -120,17 +121,17 @@
 ;; Automatically center the screen after search jumps (`n` and `N`)
 (with-eval-after-load 'evil
   (define-key evil-normal-state-map (kbd "n")
-    (lambda ()
-      "Jump to the next search match and center the screen."
-      (interactive)
-      (evil-search-next)
-      (evil-scroll-line-to-center (line-number-at-pos))))
+	      (lambda ()
+		"Jump to the next search match and center the screen."
+		(interactive)
+		(evil-search-next)
+		(evil-scroll-line-to-center (line-number-at-pos))))
   (define-key evil-normal-state-map (kbd "N")
-    (lambda ()
-      "Jump to the previous search match and center the screen."
-      (interactive)
-      (evil-search-previous)
-      (evil-scroll-line-to-center (line-number-at-pos)))))
+	      (lambda ()
+		"Jump to the previous search match and center the screen."
+		(interactive)
+		(evil-search-previous)
+		(evil-scroll-line-to-center (line-number-at-pos)))))
 
 ;; Enable relative line numbers globally
 (setq display-line-numbers-type 'relative) ;; Set line numbers to relative
