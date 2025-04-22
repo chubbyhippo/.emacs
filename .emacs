@@ -1,3 +1,8 @@
+;; Set font to JetBrainsMono Nerd Font in Emacs
+(set-face-attribute 'default nil
+                    :font "JetBrainsMono NF"
+                    :height 120) ;; Adjust line height as needed
+
 ;; Disable visual bell to avoid irritating blinking
 (setq ring-bell-function 'ignore)
 
@@ -143,15 +148,3 @@
                 eshell-mode-hook
                 dired-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
