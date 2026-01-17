@@ -1,0 +1,16 @@
+= .emacs
+:raw_base_emacs_url: https://raw.githubusercontent.com/chubbyhippo/.emacs/refs/heads/main
+
+== wget
+
+[source,shell,subs="attributes"]
+----
+wget {raw_base_emacs_url}/.emacs -P ~
+----
+
+== curl
+
+[source,shell,subs="attributes"]
+----
+curl {raw_base_emacs_url}/.emacs -o ~/.emacs
+----
